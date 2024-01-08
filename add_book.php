@@ -10,6 +10,7 @@ $publishers = PublisherQuery::create()->find();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $book = new Book();
     $book->setTitle($_POST['title']);
+    $book->setIsbn($_POST['isbn']); // Setting the ISBN
     $book->setAuthorId($_POST['author_id']);
     $book->setPublisherId($_POST['publisher_id']);
     $book->save();
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>Add a New Book</h1>
 <form method="post">
     Title: <input type="text" name="title"><br>
+    ISBN: <input type="text" name="isbn"><br> <!-- ISBN input field -->
     Author:
     <select name="author_id">
         <?php foreach ($authors as $author): ?>
