@@ -2,6 +2,12 @@
 
 This repository contains a simple PHP CRUD (Create, Read, Update, Delete) application for a bookstore, using Propel as an ORM (Object-Relational Mapping) tool. The application demonstrates basic interactions with a database, managing books, authors, and publishers.
 
+## Screenshots
+
+![index-page](screenshots/indexpage.png)
+![add-book](screenshots/addbookpage.png)
+![list-books](screenshots/listbookspage.png)
+
 ## Table of Contents
 
 - [Requirements](#requirements)
@@ -82,7 +88,7 @@ The application is structured as follows:
 
 Here's the Enhanced Entity-Relationship diagram for the bookstore application:
 
-![EER Diagram](EERdiagram.png)
+![EER Diagram](screenshots/EERdiagram.png)
 
 
 ## Contributing
