@@ -72,6 +72,11 @@ The application is structured as follows:
 - `update_book.php`: Form to update existing book details.
 - `delete_book.php`: Interface to delete a book by ID.
 - `index.php`: Main entry point linking to various operations.
+- `propel.yaml`: Propel configuration file.
+- `schema.xml`: Propel schema file defining the database structure.
+- `config.php`: Generated Propel configuration file.
+- `vendor/`: PHP dependencies managed by Composer.
+- `composer.json`: Composer configuration file.
 
 ## EER Diagram
 
