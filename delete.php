@@ -1,6 +1,6 @@
 <?php
-require_once 'vendor/autoload.php'; // Update the path
-require_once 'generated-conf/config.php'; // Update the path
+require_once 'vendor/autoload.php';
+require_once 'generated-conf/config.php';
 
 $authors = AuthorQuery::create()->find();
 $publishers = PublisherQuery::create()->find();
