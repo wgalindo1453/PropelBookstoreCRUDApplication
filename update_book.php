@@ -2,25 +2,25 @@
 require_once 'vendor/autoload.php'; // Update the path
 require_once 'generated-conf/config.php'; // Update the path
 
+$books = BookQuery::create()->find();
 $authors = AuthorQuery::create()->find();
 $publishers = PublisherQuery::create()->find();
+$selectedBook = null;
+$message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $book = BookQuery::create()->findPK($_POST['book_id']);
-    if ($book) {
-        $book->setTitle($_POST['title']);
-        $book->setAuthorId($_POST['author_id']);
-        $book->setPublisherId($_POST['publisher_id']);
-        $book->save();
-        echo "Book Updated Successfully";
+    if (isset($_POST['book_id'])) {
+        $selectedBook = BookQuery::create()->findPK($_POST['book_id']);
+    } elseif (isset($_POST['update_book'])) {
+        $selectedBook = BookQuery::create()->findPK($_POST['update_book_id']);
+        if ($selectedBook) {
+            $selectedBook->setTitle($_POST['title']);
+            $selectedBook->setAuthorId($_POST['author_id']);
+            $selectedBook->setPublisherId($_POST['publisher_id']);
+            $selectedBook->save();
+            $message = "Book Updated Successfully";
+        }
     }
-}
-
-// Assuming you pass the book ID to this script, e.g., update_book.php?book_id=1
-$bookId = isset($_GET['book_id']) ? $_GET['book_id'] : null;
-$book = null;
-if ($bookId) {
-    $book = BookQuery::create()->findPK($bookId);
 }
 ?>
 
@@ -31,30 +31,45 @@ if ($bookId) {
 </head>
 <body>
 <h1>Update Book</h1>
-<?php if ($book): ?>
+
+<form method="post">
+    Select Book:
+    <select name="book_id" onchange="this.form.submit()">
+        <option value="">Select a Book</option>
+        <?php foreach ($books as $book): ?>
+            <option value="<?php echo $book->getId(); ?>" <?php if ($selectedBook && $book->getId() == $selectedBook->getId()) echo 'selected'; ?>>
+                <?php echo htmlspecialchars($book->getTitle()); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</form>
+
+<?php if ($selectedBook): ?>
     <form method="post">
-        <input type="hidden" name="book_id" value="<?php echo $book->getId(); ?>">
-        Title: <input type="text" name="title" value="<?php echo $book->getTitle(); ?>"><br>
+        <input type="hidden" name="update_book_id" value="<?php echo $selectedBook->getId(); ?>">
+        Title: <input type="text" name="title" value="<?php echo htmlspecialchars($selectedBook->getTitle()); ?>"><br>
         Author:
         <select name="author_id">
             <?php foreach ($authors as $author): ?>
-                <option value="<?php echo $author->getId(); ?>" <?php if ($author->getId() == $book->getAuthorId()) echo 'selected'; ?>>
-                    <?php echo $author->getFirstName() . ' ' . $author->getLastName(); ?>
+                <option value="<?php echo $author->getId(); ?>" <?php if ($author->getId() == $selectedBook->getAuthorId()) echo 'selected'; ?>>
+                    <?php echo htmlspecialchars($author->getFirstName() . ' ' . $author->getLastName()); ?>
                 </option>
             <?php endforeach; ?>
         </select><br>
         Publisher:
         <select name="publisher_id">
             <?php foreach ($publishers as $publisher): ?>
-                <option value="<?php echo $publisher->getId(); ?>" <?php if ($publisher->getId() == $book->getPublisherId()) echo 'selected'; ?>>
-                    <?php echo $publisher->getName(); ?>
+                <option value="<?php echo $publisher->getId(); ?>" <?php if ($publisher->getId() == $selectedBook->getPublisherId()) echo 'selected'; ?>>
+                    <?php echo htmlspecialchars($publisher->getName()); ?>
                 </option>
             <?php endforeach; ?>
         </select><br>
-        <input type="submit" value="Update Book">
+        <input type="submit" name="update_book" value="Update Book">
     </form>
-<?php else: ?>
-    <p>Book not found.</p>
+<?php endif; ?>
+
+<?php if ($message): ?>
+    <p><?php echo $message; ?></p>
 <?php endif; ?>
 </body>
 </html>
