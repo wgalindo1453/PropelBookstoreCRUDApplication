@@ -15,6 +15,7 @@ This repository contains a simple PHP CRUD (Create, Read, Update, Delete) applic
 - [Configuration](#configuration)
 - [Running the Application](#running-the-application)
 - [Application Structure](#application-structure)
+- [Propel Command Cheat Sheet](#propel-command-cheat-sheet)
 - [Contributing](#contributing)
 - [Documentation and Resources](#documentation-and-resources)
 
@@ -90,6 +91,10 @@ Here's the Enhanced Entity-Relationship diagram for the bookstore application:
 
 ![EER Diagram](screenshots/EERdiagram.png)
 
+
+## Propel Command Cheat Sheet
+
+For a quick reference to the Propel commands used in this project, check out the [Propel Command Cheat Sheet](CHEATSHEET.md).
 
 ## Contributing
 
