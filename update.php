@@ -2,11 +2,13 @@
 require_once 'vendor/autoload.php'; // Update the path
 require_once 'generated-conf/config.php'; // Update the path
 
+$authors = AuthorQuery::create()->find();
+$publishers = PublisherQuery::create()->find();
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_author'])) {
-        $author = AuthorQuery::create()->findPK($_POST['id']);
+        $author = AuthorQuery::create()->findPK($_POST['author_id']);
         if ($author) {
             $author->setFirstName($_POST['firstName']);
             $author->setLastName($_POST['lastName']);
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "Author Not Found";
         }
     } elseif (isset($_POST['update_publisher'])) {
-        $publisher = PublisherQuery::create()->findPK($_POST['id']);
+        $publisher = PublisherQuery::create()->findPK($_POST['publisher_id']);
         if ($publisher) {
             $publisher->setName($_POST['name']);
             $publisher->save();
@@ -27,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <h1>Update Author</h1>
 <form method="post">
-    Author ID: <input type="number" name="id"><br>
+    Select Author:
+    <select name="author_id">
+        <?php foreach ($authors as $author): ?>
+            <option value="<?php echo $author->getId(); ?>">
+                <?php echo $author->getFirstName() . ' ' . $author->getLastName(); ?>
+            </option>
+        <?php endforeach; ?>
+    </select><br>
     First Name: <input type="text" name="firstName"><br>
     Last Name: <input type="text" name="lastName"><br>
     <input type="submit" name="update_author" value="Update Author">
@@ -43,7 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <h1>Update Publisher</h1>
 <form method="post">
-    Publisher ID: <input type="number" name="id"><br>
+    Select Publisher:
+    <select name="publisher_id">
+        <?php foreach ($publishers as $publisher): ?>
+            <option value="<?php echo $publisher->getId(); ?>">
+                <?php echo $publisher->getName(); ?>
+            </option>
+        <?php endforeach; ?>
+    </select><br>
     Name: <input type="text" name="name"><br>
     <input type="submit" name="update_publisher" value="Update Publisher">
 </form>
@@ -53,4 +70,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 </body>
 </html>
-
