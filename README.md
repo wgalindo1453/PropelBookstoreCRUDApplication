@@ -91,6 +91,17 @@ Here's the Enhanced Entity-Relationship diagram for the bookstore application:
 
 ![EER Diagram](screenshots/EERdiagram.png)
 
+## Propel ORM Framework Overview
+
+Propel is an open-source Object-Relational Mapping (ORM) for PHP 5.5 and up. It's a powerful tool for handling database operations in an object-oriented manner. Propel builds upon the concepts of Active Record and provides a robust set of tools for database schema definition, model generation, and query building.
+check out the [Propel ORM Framework Overview](Propel2_ORM_Framework_Overview.md).
+
+
+
+## Propel Installation Guide
+
+For a detailed guide on installing and using Propel, check out the [Propel Installation Guide](Propel2_Installation_Guide.md).
+
 
 ## Propel Command Cheat Sheet
 
